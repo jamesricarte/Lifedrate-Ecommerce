@@ -4,7 +4,7 @@ const Body = () => {
   return (
     <>
       <div className="flex flex-col items-center justify-center mt-12">
-        <h3 className="text-3xl font-medium">About</h3>
+        <h3 className="text-3xl font-semibold">About</h3>
         <div className="w-[38%] mt-8">
           <p>
             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Recusandae
