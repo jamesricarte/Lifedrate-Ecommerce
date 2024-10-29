@@ -5,4 +5,4 @@ const productSchema = new mongoose.Schema({
     age: {}
 })
 
-moodule.exports = mongoose.model('Product', productSchema);
+module.exports = mongoose.model('Product', productSchema);

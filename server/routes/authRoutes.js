@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcrypt');
 const User = require('../models/User');
 
 router.get('/users', async (req, res) => {
@@ -23,14 +24,14 @@ router.post('/login', async (req, res) => {
 
         res.status(200).json({ message: 'Login successfull'});
     } catch (error) {
-        res.status(500).json({ message: 'Server error'});
+        res.status(500).json(error.message);
     }
 })
 
 router.post('/register', async (req, res) => {
-    const {full_name, email, password } = req.body;
+    const {fullName, email, password } = req.body;
 
-    if (!full_name || !email || !password) {
+    if (!fullName || !email || !password) {
         return res.status(400).json({ message: 'All fields are required'});
     }
 
@@ -41,7 +42,7 @@ router.post('/register', async (req, res) => {
         }
 
         const newUser = new User({
-            full_name,
+            fullName,
             email,
             password
         });
@@ -49,7 +50,7 @@ router.post('/register', async (req, res) => {
         await newUser.save();
         res.status(201).json({ message: 'User registered successfully'});
     } catch (error) {
-        res.status(500).json( {message: 'Server error'});
+        res.status(500).json(error.message);
     }
 })
 
