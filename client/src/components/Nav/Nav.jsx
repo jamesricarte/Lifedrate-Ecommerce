@@ -1,11 +1,13 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import Button from "../partials/Button";
+import { useAuth } from "../../context/AuthContext";
 
 const getLinkClass = (isActive) =>
   isActive ? "text-gray-700 underline" : "hover:underline hover:text-gray-700";
 
 const Nav = () => {
+  const { user, logout } = useAuth();
   return (
     <>
       <nav className="flex justify-center items-center w-full bg-cyan-500 h-20 text-xl text-white">
@@ -29,6 +31,14 @@ const Nav = () => {
               Home
             </NavLink>
             <NavLink
+              to="/products"
+              className={({ isActive }) =>
+                `cursor-pointer ${getLinkClass(isActive)}`
+              }
+            >
+              Products
+            </NavLink>
+            <NavLink
               to="/about"
               className={({ isActive }) =>
                 `cursor-pointer ${getLinkClass(isActive)}`
@@ -46,12 +56,28 @@ const Nav = () => {
             </NavLink>
 
             <div className="flex gap-4 items-center">
-              <NavLink to="/login">
-                <Button variant="primary">Log in</Button>
-              </NavLink>
-              <NavLink to="/register">
-                <Button variant="secondary">Sign Up</Button>
-              </NavLink>
+              {user ? (
+                <div className="flex items-center gap-3">
+                  <span>{user.name}</span>
+                  <NavLink>
+                    <Button variant="secondary">Account</Button>
+                  </NavLink>
+                  <NavLink to="/login">
+                    <Button variant="primary" onClick={logout}>
+                      Logout
+                    </Button>
+                  </NavLink>
+                </div>
+              ) : (
+                <>
+                  <NavLink to="/login">
+                    <Button variant="primary">Log in</Button>
+                  </NavLink>
+                  <NavLink to="/register">
+                    <Button variant="secondary">Sign Up</Button>
+                  </NavLink>
+                </>
+              )}
             </div>
           </div>
         </ul>

@@ -3,6 +3,8 @@ import Button from "../../partials/Button";
 import Input from "../../partials/Input";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import "./../../../modal.css";
+import { useAuth } from "../../../context/AuthContext";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -11,6 +13,11 @@ const Body = () => {
 
   const [email, setEmail] = useState("");
   const passwordRef = useRef(null);
+
+  const [message, setMessage] = useState(null);
+  const [isMessageVisible, setIsMessageVisible] = useState(false);
+
+  const { login } = useAuth();
 
   const authenticateUser = async (e) => {
     e.preventDefault();
@@ -24,27 +31,38 @@ const Body = () => {
         password,
       });
 
-      console.log(response.data.message);
+      login(response.data.user);
+      setMessage({ text: response.data.message, type: "success" });
+      setIsMessageVisible(true);
+
       setEmail("");
       passwordRef.current.value = "";
 
       document.getElementById("email").focus;
+
+      setTimeout(() => setIsMessageVisible(false), 3000);
+      navigate("/products");
     } catch (error) {
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-      ) {
-        console.log(error.response.data.message);
-      } else {
-        console.log(error.message);
-      }
+      const errorMessage = error.response?.data?.message || error.message;
+
+      setMessage({ text: errorMessage, type: "error" });
+      setIsMessageVisible(true);
+
+      setTimeout(() => setIsMessageVisible(false), 3000);
     }
   };
 
   return (
     <>
       <main className="h-[80vh] flex flex-col items-center justify-center">
+        <div
+          className={`message ${isMessageVisible ? "active" : ""} ${
+            message?.type === "success" ? "bg-success" : "bg-error"
+          }`}
+        >
+          {message?.text}
+        </div>
+
         <form
           className="flex flex-col items-center gap-2 p-16 w-[20vw] border rounded-lg text-gray-700"
           onSubmit={authenticateUser}
