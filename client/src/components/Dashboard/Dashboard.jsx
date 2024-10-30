@@ -1,14 +1,13 @@
 import React from "react";
 import Nav from "../Nav/Nav";
-import Body from "./Body";
 
-const Products = () => {
+const Dashboard = () => {
   return (
     <>
       <Nav />
-      <Body />
+      <div>This is Dashboard</div>;
     </>
   );
 };
 
-export default Products;
+export default Dashboard;

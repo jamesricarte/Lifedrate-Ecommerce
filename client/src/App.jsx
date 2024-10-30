@@ -6,7 +6,8 @@ import About from "./components/About/About";
 import Contact from "./components/Contact/Contact";
 import Login from "./components/Auth/Login/Login";
 import Register from "./components/Auth/Register/Register";
-import PrivateRoute from "./components/PrivateRoutes";
+import Dashboard from "./components/Dashboard/Dashboard";
+import PrivateRoute from "./components/PrivateRoute";
 import { AuthProvider } from "./context/AuthContext";
 
 function App() {
@@ -24,7 +25,7 @@ function App() {
             path="/dashboard"
             element={
               <PrivateRoute>
-                <Register />
+                <Dashboard />
               </PrivateRoute>
             }
           />

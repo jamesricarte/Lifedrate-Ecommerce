@@ -36,7 +36,7 @@ const Body = () => {
       passwordRef.current.value = "";
 
       setTimeout(() => setIsMessageVisible(false), 3000);
-      // navigate("/login");
+      navigate("/login");
     } catch (error) {
       const errorMessage = error.response?.data?.message || error.message;
 
@@ -52,7 +52,7 @@ const Body = () => {
       <main className="h-[80vh] flex flex-col items-center justify-center">
         <div
           className={`message ${isMessageVisible ? "active" : ""} ${
-            message?.type === "success" ? "bg-success" : "bg-error"
+            message?.type === "success" ? "bg-green-500" : "bg-red-500"
           }`}
         >
           {message?.text}
