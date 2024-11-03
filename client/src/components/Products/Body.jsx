@@ -1,7 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import Card from "../partials/Card";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const Body = () => {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get(`${API_URL}/products`);
+        setProducts(response.data);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
   return (
     <>
       <main className="w-full flex flex-col items-center mt-16">
@@ -31,12 +49,9 @@ const Body = () => {
           </div>
         </div>
         <div className="grid grid-cols-4 gap-4">
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
+          {products.map((product) => (
+            <Card key={product._id} product={product} />
+          ))}
         </div>
       </main>
     </>

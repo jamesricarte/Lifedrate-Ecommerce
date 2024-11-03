@@ -59,12 +59,12 @@ const Body = () => {
         </div>
 
         <form
-          className="flex flex-col items-center gap-2 p-16 w-[20vw] border rounded-lg text-gray-700"
+          className="flex flex-col items-center gap-2 p-16 w-[400px] border rounded-lg text-gray-700"
           onSubmit={registerUser}
         >
           <h3 className="text-2xl font-semibold mb-5">Please Register</h3>
 
-          <div className="flex flex-col">
+          <div className="flex flex-col w-full">
             <label htmlFor="fullName" className="mb-1">
               Full Name
             </label>
@@ -76,7 +76,7 @@ const Body = () => {
             ></Input>
           </div>
 
-          <div className="flex flex-col">
+          <div className="flex flex-col w-full">
             <label htmlFor="email" className="mb-1">
               Email
             </label>
@@ -88,7 +88,7 @@ const Body = () => {
             ></Input>
           </div>
 
-          <div className="flex flex-col">
+          <div className="flex flex-col w-full">
             <label htmlFor="password" className="mb-1">
               Password
             </label>

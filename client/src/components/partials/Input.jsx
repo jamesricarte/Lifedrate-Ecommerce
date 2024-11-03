@@ -2,7 +2,7 @@ import React, { forwardRef } from "react";
 
 const Input = forwardRef(
   (
-    { type = "text", placeholder, name, value, id, required, onChange },
+    { type = "text", placeholder, name, value, id, required, onChange, accept },
     ref
   ) => {
     return (
@@ -15,7 +15,8 @@ const Input = forwardRef(
         required={required}
         onChange={onChange}
         ref={ref}
-        className="border border-gray-400 rounded-md p-1 w-64"
+        accept={accept}
+        className="border border-gray-400 rounded-md p-1 w-full"
       />
     );
   }

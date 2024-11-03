@@ -7,6 +7,7 @@ import Contact from "./components/Contact/Contact";
 import Login from "./components/Auth/Login/Login";
 import Register from "./components/Auth/Register/Register";
 import Dashboard from "./components/Dashboard/Dashboard";
+import AddProducts from "./components/Products/AddProducts/AddProducts";
 import PrivateRoute from "./components/PrivateRoute";
 import { AuthProvider } from "./context/AuthContext";
 
@@ -26,6 +27,14 @@ function App() {
             element={
               <PrivateRoute>
                 <Dashboard />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/products/add"
+            element={
+              <PrivateRoute>
+                <AddProducts />
               </PrivateRoute>
             }
           />
