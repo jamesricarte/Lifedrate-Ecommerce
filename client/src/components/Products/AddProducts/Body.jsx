@@ -75,7 +75,6 @@ const Body = () => {
             placeholder="Description"
             value={productData.description}
             onChange={handleChange}
-            required
           ></textarea>
           <Input
             type="file"

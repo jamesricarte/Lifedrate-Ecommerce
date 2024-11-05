@@ -22,7 +22,7 @@ const Body = () => {
 
   return (
     <>
-      <main className="w-full flex flex-col items-center mt-16">
+      <main className="w-full flex flex-col items-center mt-16 mb-20">
         <div className="w-[1330px] mb-8 flex text-sm items-center">
           <p>Sort By</p>
           <div className="flex gap-4 ml-3">
