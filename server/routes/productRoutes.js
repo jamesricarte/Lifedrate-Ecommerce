@@ -57,4 +57,15 @@ router.get('/products', async (req, res) => {
     }
 })
 
+router.get('/products/:id', async (req, res) => {
+    try {
+        const id = req.params.id;
+        const product = await Product.findById(id);
+        if (!product) return res.status(400).send({ message: 'No products found', success: false, data: product});
+        res.send({message: 'product has succesfully retrieved', success: true, data: product});
+    } catch (error) {
+        res.status(500).json(error.message);
+    }
+})
+
 module.exports = router;

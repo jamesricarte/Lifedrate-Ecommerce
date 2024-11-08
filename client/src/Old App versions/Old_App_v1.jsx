@@ -1,7 +1,7 @@
 import "./App.css";
-import Message from "../components/partials/Message";
-import Alert from "../components/partials/Alert";
-import Button from "../components/partials/Button";
+import Message from "../components/old_components/Message";
+import Alert from "../components/old_components/Alert";
+import Button from "../components/old_components/Button";
 import { useState } from "react";
 
 function App() {
