@@ -3,7 +3,7 @@ import Button from "../../components/Button";
 import Input from "../../components/Input";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import "./../../modal.css";
+// import "./../../modal.css";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -51,9 +51,9 @@ const Body = () => {
     <>
       <main className="h-[80vh] flex flex-col items-center justify-center">
         <div
-          className={`message ${isMessageVisible ? "active" : ""} ${
-            message?.type === "success" ? "bg-green-500" : "bg-red-500"
-          }`}
+          className={`fixed top-0 left-1/2 -translate-x-1/2 py-1.5 px-2.5 rounded-md text-white z-50 opacity-0 pointer-events-none transition-all duration-[.6s] ease-[ease] ${
+            isMessageVisible ? "opacity-100 top-[10%] pointer-events-auto" : ""
+          } ${message?.type === "success" ? "bg-green-500" : "bg-red-500"}`}
         >
           {message?.text}
         </div>

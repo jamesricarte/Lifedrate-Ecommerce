@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const authRoutes = require('./routes/authRoutes');
 const productRoutes = require('./routes/productRoutes');
+const cartRoutes = require('./routes/cartRoutes');
 
 dotenv.config();
 const app = express();
@@ -15,6 +16,7 @@ app.use(cors( {origin: 'http://localhost:5173'} ));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(authRoutes);
 app.use(productRoutes);
+app.use(cartRoutes);
 
 mongoose.connect(process.env.MONGODB_URI)
 .then(() => {

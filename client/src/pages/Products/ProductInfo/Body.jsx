@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
-import Button from "../../components/Button";
-import { useParams, useNavigate } from "react-router-dom";
+import Button from "../../../components/Button";
+import { useParams } from "react-router-dom";
 import axios from "axios";
+import { useAuth } from "../../../context/AuthContext";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 const Body = () => {
   const { id } = useParams();
+  const { user } = useAuth();
   const [product, setProduct] = useState({
     name: "",
     price: "",
@@ -14,8 +16,12 @@ const Body = () => {
     image: "",
   });
   const [quantity, setQuantity] = useState(1);
+
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
+
+  const [message, setMessage] = useState(null);
+  const [isMessageVisible, setIsMessageVisible] = useState(false);
 
   const imageUrl = `${API_URL}/uploads/${product.image}`;
 
@@ -25,7 +31,6 @@ const Body = () => {
       setProduct(response.data.data);
       setLoading(false);
     } catch (error) {
-      console.error(error);
       setError(
         "We're Sorry... We seem to have lost this page but we don't want to lose you."
       );
@@ -39,12 +44,35 @@ const Body = () => {
 
   const addToCart = async () => {
     try {
-      const response = await axios.post(`${API_URL}/cart`);
-    } catch (error) {}
+      const response = await axios.post(`${API_URL}/cart`, {
+        userId: user.id,
+        productId: id,
+        quantity,
+      });
+      setMessage({ text: response.data.message, type: "success" });
+      setIsMessageVisible(true);
+
+      setTimeout(() => setIsMessageVisible(false), 3000);
+    } catch (error) {
+      const erroMessage = error.response?.data?.message || error.message;
+
+      setMessage({ text: erroMessage, type: "error" });
+      setIsMessageVisible(true);
+
+      setTimeout(() => setIsMessageVisible(false), 3000);
+    }
   };
 
   return (
     <>
+      <div
+        className={`fixed top-0 left-1/2 -translate-x-1/2 py-1.5 px-2.5 rounded-md text-white z-50 opacity-0 pointer-events-none transition-all duration-[.6s] ease-[ease] ${
+          isMessageVisible ? "opacity-100 top-[10%] pointer-events-auto" : ""
+        } ${message?.type === "success" ? "bg-green-500" : "bg-red-500"}`}
+      >
+        {message?.text}
+      </div>
+
       <div className="flex justify-center">
         {loading ? null : error ? (
           <div className="mt-20 p-8 text-center text bg-orange-400 text-white">
@@ -78,7 +106,11 @@ const Body = () => {
                   +
                 </Button>
               </div>
-              <Button className="w-28 mt-12" variant="primary">
+              <Button
+                className="w-28 mt-12"
+                variant="primary"
+                onClick={addToCart}
+              >
                 Add to Cart
               </Button>
             </div>

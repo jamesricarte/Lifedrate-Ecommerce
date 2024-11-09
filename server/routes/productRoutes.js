@@ -18,12 +18,19 @@ const upload = multer({
         if (mimetype && extname) {
             return cb(null, true);
         } else {
-            cb(new Error('Error: Image only!'));
+            cb(new Error('File format not supported. Only allowed formats:  jpeg, jpg, png, webp, gif.'));
         }
     }
 });
 
-router.post('/products/add', upload.single('image'), async (req, res) => {
+function multerErrorHandler(err, req, res, next) {
+    if (err instanceof multer.MulterError || err.message === 'File format not supported. Only allowed formats:  jpeg, jpg, png, webp, gif.') {
+        return res.status(400).json({ message: err.message });
+    }
+    next(err);
+}
+
+router.post('/products/add', upload.single('image'), multerErrorHandler, async (req, res) => {
     const {name, price, description } = req.body;
 
     if (!req.file) {
@@ -44,7 +51,7 @@ router.post('/products/add', upload.single('image'), async (req, res) => {
 
         res.status(201).json({ message: 'Product succesfully added!'});
     } catch (error) {
-        res.status(500).json({ message: 'Error adding product', error})
+        res.status(500).json(error.message);
     }
 })
 

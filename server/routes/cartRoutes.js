@@ -44,3 +44,5 @@ router.get('/cart/:userId', async (req, res) => {
         res.status(500).json({ message: 'Error retrieving cart', error });
     }
 })
+
+module.exports = router;

@@ -7,8 +7,8 @@ import Contact from "./pages/Contact/Contact";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Dashboard from "./pages/Dashboard/Dashboard";
-import AddProducts from "./pages/AddProducts/AddProducts";
-import ProductInfo from "./pages/ProductInfo/ProductInfo";
+import AddProducts from "./pages/Products/AddProducts/AddProducts";
+import ProductInfo from "./pages/Products/ProductInfo/ProductInfo";
 import PrivateRoute from "./components/PrivateRoute";
 import { AuthProvider } from "./context/AuthContext";
 
