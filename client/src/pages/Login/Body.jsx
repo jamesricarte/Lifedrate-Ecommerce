@@ -72,6 +72,7 @@ const Body = () => {
               Email
             </label>
             <Input
+              type="email"
               placeholder="Enter your Email"
               id="email"
               required={true}

@@ -46,7 +46,7 @@ const Nav = () => {
             to="/"
             className="text-3xl font-semibold cursor-pointer hover:text-slate-700"
           >
-            Logo
+            Lifedrate
           </NavLink>
         </div>
 
