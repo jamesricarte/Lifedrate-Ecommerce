@@ -66,7 +66,7 @@ const Body = () => {
           className="flex flex-col items-center gap-2 p-16 w-[400px] border rounded-lg text-gray-700"
           onSubmit={authenticateUser}
         >
-          <h3 className="text-2xl font-semibold mb-5">Please Login</h3>
+          <h3 className="mb-5 text-2xl font-semibold">Please Login</h3>
           <div className="flex flex-col w-full">
             <label htmlFor="email" className="mb-1">
               Email
@@ -93,7 +93,7 @@ const Body = () => {
               ref={passwordRef}
             ></Input>
           </div>
-          <Button className="mt-3 w-32" type="submit" variant="primary">
+          <Button className="w-32 mt-3" type="submit" variant="primary">
             Log in
           </Button>
           <p>

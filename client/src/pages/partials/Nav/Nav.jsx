@@ -6,8 +6,7 @@ import { LuUserCircle2 } from "react-icons/lu";
 import { BiCart } from "react-icons/bi";
 import axios from "axios";
 
-const getLinkClass = (isActive) =>
-  isActive ? "text-slate-700" : "hover:text-slate-700";
+const getLinkClass = (isActive) => isActive ?? "text-slate-700";
 
 const Nav = () => {
   const { user, loading, logout } = useAuth();
@@ -35,22 +34,22 @@ const Nav = () => {
   }, [user, loading]);
 
   if (loading) {
-    return <nav className="w-full bg-cyan-500 h-20"></nav>;
+    return <nav className="w-full h-20 bg-cyan-500"></nav>;
   }
 
   return (
-    <nav className="flex justify-center items-center w-full bg-cyan-500 h-20 text-xl text-white">
+    <nav className="flex items-center justify-center w-full h-20 text-lg text-black bg-white">
       <ul className="flex justify-between items-center w-[80%]">
         <div className="flex items-center">
           <NavLink
             to="/"
-            className="text-3xl font-semibold cursor-pointer hover:text-slate-700"
+            className="text-2xl font-semibold cursor-pointer hover:text-slate-700"
           >
             Lifedrate
           </NavLink>
         </div>
 
-        <div className="flex w-[31vw] justify-between items-center">
+        <div className="flex w-[21vw] justify-between items-center">
           <NavLink
             to="/"
             className={({ isActive }) =>
@@ -83,20 +82,70 @@ const Nav = () => {
           >
             Contact
           </NavLink>
+        </div>
+
+        <div className="flex items-center gap-5">
+          {user && (
+            <div
+              className="relative cursor-pointer group"
+              onMouseEnter={() => setShowCart(true)}
+              onMouseLeave={() => setShowCart(false)}
+            >
+              <div className="group-hover:opacity-75">
+                <BiCart size={28} />
+              </div>
+
+              {cart.length > 0 ? (
+                <div className="absolute flex items-center justify-center w-5 h-5 text-xs text-white bg-red-400 rounded-full -top-1 -right-2 group-hover:opacity-75">
+                  {cart.length}
+                </div>
+              ) : null}
+
+              <div
+                className={`bg-white text-black absolute top-[100%] left-1/2 transform -translate-x-1/2 text-base p-2 rounded-md w-52 max-h-96 flex flex-col items-center gap-1 shadow-lg transition-opacity duration-300 overflow-scroll ${
+                  showCart ? "opacity-100" : "opacity-0 pointer-events-none"
+                } ${!user && "hidden"}`}
+              >
+                {cart.map((item, index) => (
+                  <div
+                    key={index}
+                    className="flex w-full rounded-md min-h-28 bg-gray-50 hover:bg-gray-100"
+                  >
+                    <div className="min-w-16 flex-[1]">
+                      <img
+                        className="object-cover w-full h-full"
+                        src={`${API_URL}/uploads/${item.productId.image}`}
+                      />
+                    </div>
+                    <div className="flex-[2] flex flex-col justify-evenly p-1">
+                      <h3 key={index} className="text-xs font-bold">
+                        {item.productId.name}
+                      </h3>
+                      <p className="text-xs text-orange-700">
+                        Quantity: {item.quantity}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+                <Button
+                  variant="primary"
+                  className="w-full py-2 my-2 rounded-sm"
+                >
+                  Go to Cart
+                </Button>
+              </div>
+            </div>
+          )}
 
           <div
-            className="flex gap-4 items-center relative"
+            className="relative flex items-center gap-4"
             onMouseEnter={() => setShowMenu(true)}
             onMouseLeave={() => setShowMenu(false)}
           >
             {user ? (
               <>
-                <div className="flex items-center gap-2 cursor-pointer hover:opacity-75 rounded-md p-2">
-                  <span className="text-base">
-                    {user.name.split(" ")[0].charAt(0).toUpperCase() +
-                      user.name.split(" ")[0].slice(1)}
-                  </span>
-                  <LuUserCircle2 size={28} />
+                <div className="flex items-center p-2 rounded-md cursor-pointer hover:opacity-75">
+                  <LuUserCircle2 size={24} />
                 </div>
               </>
             ) : (
@@ -117,10 +166,10 @@ const Nav = () => {
                 showMenu ? "opacity-100" : "opacity-0 pointer-events-none"
               } ${!user && "hidden"}`}
             >
-              <div className="w-full text-center cursor-pointer hover:bg-gray-100 p-1 rounded-md">
+              <div className="w-full p-1 text-center rounded-md cursor-pointer hover:bg-gray-100">
                 My Account
               </div>
-              <div className="w-full text-center cursor-pointer hover:bg-gray-100 p-1 rounded-md">
+              <div className="w-full p-1 text-center rounded-md cursor-pointer hover:bg-gray-100">
                 My Purchase
               </div>
               <div className="p-2">
@@ -130,58 +179,6 @@ const Nav = () => {
               </div>
             </div>
           </div>
-
-          {user && (
-            <div
-              className="cursor-pointer relative group"
-              onMouseEnter={() => setShowCart(true)}
-              onMouseLeave={() => setShowCart(false)}
-            >
-              <div className="group-hover:opacity-75">
-                <BiCart size={34} />
-              </div>
-
-              {cart.length > 0 ? (
-                <div className="absolute w-5 h-5 bg-red-400 flex justify-center items-center text-xs text-white rounded-full -top-1 -right-2 group-hover:opacity-75">
-                  {cart.length}
-                </div>
-              ) : null}
-
-              <div
-                className={`bg-white text-black absolute top-[100%] left-1/2 transform -translate-x-1/2 text-base p-2 rounded-md w-52 max-h-96 flex flex-col items-center gap-1 shadow-lg transition-opacity duration-300 overflow-scroll ${
-                  showCart ? "opacity-100" : "opacity-0 pointer-events-none"
-                } ${!user && "hidden"}`}
-              >
-                {cart.map((item, index) => (
-                  <div
-                    key={index}
-                    className="flex w-full min-h-28 rounded-md bg-gray-50 hover:bg-gray-100"
-                  >
-                    <div className="min-w-16 flex-[1]">
-                      <img
-                        className="w-full h-full object-cover"
-                        src={`${API_URL}/uploads/${item.productId.image}`}
-                      />
-                    </div>
-                    <div className="flex-[2] flex flex-col justify-evenly p-1">
-                      <h3 key={index} className="font-bold text-xs">
-                        {item.productId.name}
-                      </h3>
-                      <p className="text-xs text-orange-700">
-                        Quantity: {item.quantity}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-                <Button
-                  variant="primary"
-                  className="my-2 w-full py-2 rounded-sm"
-                >
-                  Go to Cart
-                </Button>
-              </div>
-            </div>
-          )}
         </div>
       </ul>
     </nav>

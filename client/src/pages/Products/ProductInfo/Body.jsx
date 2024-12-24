@@ -75,18 +75,18 @@ const Body = () => {
 
       <div className="flex justify-center">
         {loading ? null : error ? (
-          <div className="mt-20 p-8 text-center text bg-orange-400 text-white">
+          <div className="p-8 mt-20 text-center text-white bg-orange-400 text">
             {error}
           </div>
         ) : (
-          <div className="flex mt-20 rounded-md border mb-24">
+          <div className="flex mt-5 mb-24 border rounded-md">
             <div className="w-[500px] h-[700px]  bg-gray-100">
-              <img className="w-full h-full object-contain" src={imageUrl} />
+              <img className="object-contain w-full h-full" src={imageUrl} />
             </div>
 
             <div className="w-[500px] p-8">
-              <h3 className="font-bold text-lg mb-4">{product.name}</h3>
-              <p className="text-sm mb-12">{product.description}</p>
+              <h3 className="mb-4 text-lg font-bold">{product.name}</h3>
+              <p className="mb-12 text-sm">{product.description}</p>
               <p className="text-sm">$ {product.price}</p>
               <div className="flex items-center mt-6">
                 <p className="text-sm text-gray-600">Quantity</p>
@@ -96,7 +96,7 @@ const Body = () => {
                 >
                   -
                 </Button>
-                <div className="px-4 py-1 border text-sm text-orange-600">
+                <div className="px-4 py-1 text-sm text-orange-600 border">
                   {quantity}
                 </div>
                 <Button
@@ -107,12 +107,23 @@ const Body = () => {
                 </Button>
               </div>
               <Button
-                className="w-28 mt-12"
+                className="mt-12 w-28"
                 variant="primary"
                 onClick={addToCart}
               >
                 Add to Cart
               </Button>
+
+              <div className="mt-7">
+                <p className="text-sm text-gray-800">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Voluptates rerum explicabo quo vitae aliquam quae
+                  necessitatibus modi dolores, nisi totam expedita! Magni
+                  aliquid mollitia incidunt perspiciatis deserunt voluptates
+                  vitae odio voluptas recusandae, deleniti architecto
+                  necessitatibus, expedita unde eius repellat quos?
+                </p>
+              </div>
             </div>
           </div>
         )}

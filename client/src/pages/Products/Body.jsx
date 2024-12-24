@@ -23,19 +23,19 @@ const Body = () => {
 
   return (
     <>
-      <main className="w-full flex flex-col items-center mt-16 mb-20">
+      <main className="flex flex-col items-center w-full mt-5 mb-20">
         <div className="w-[1330px] mb-8 flex text-sm items-center">
           <p>Sort By</p>
           <div className="flex gap-4 ml-3">
-            <div className="bg-orange-500 text-white p-1 cursor-pointer hover:opacity-80">
+            <div className="p-1 text-white bg-orange-500 cursor-pointer hover:opacity-80">
               Relevance
             </div>
 
             <div className="flex gap-2">
-              <div className="bg-gray-100 p-1 cursor-pointer hover:bg-orange-500 hover:text-white">
+              <div className="p-1 bg-gray-100 cursor-pointer hover:bg-orange-500 hover:text-white">
                 Latest
               </div>
-              <div className="bg-gray-100 p-1 cursor-pointer hover:bg-orange-500 hover:text-white">
+              <div className="p-1 bg-gray-100 cursor-pointer hover:bg-orange-500 hover:text-white">
                 Top Sales
               </div>
 

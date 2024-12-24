@@ -2,7 +2,7 @@ import React from "react";
 
 const Body = () => {
   return (
-    <div className="flex flex-col items-center justify-center mt-12">
+    <div className="flex flex-col items-center justify-center mt-5">
       <h3 className="text-3xl font-semibold">Contact</h3>
       <div className="w-[38%] mt-8">
         <p>
