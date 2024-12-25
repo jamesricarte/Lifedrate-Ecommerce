@@ -5,16 +5,16 @@ import { useAuth } from "../../../context/AuthContext";
 import { LuUserCircle2 } from "react-icons/lu";
 import { BiCart } from "react-icons/bi";
 import axios from "axios";
+import { useCart } from "../../../context/CartContext";
 
 const getLinkClass = (isActive) => isActive ?? "text-slate-700";
 
 const Nav = () => {
   const { user, loading, logout } = useAuth();
+  const { cart, setCart, clearCart } = useCart();
 
   const [showMenu, setShowMenu] = useState(false);
   const [showCart, setShowCart] = useState(false);
-
-  const [cart, setCart] = useState([]);
 
   const API_URL = import.meta.env.VITE_API_URL;
 
@@ -173,7 +173,13 @@ const Nav = () => {
                 My Purchase
               </div>
               <div className="p-2">
-                <Button variant="primary" onClick={logout}>
+                <Button
+                  variant="primary"
+                  onClick={() => {
+                    clearCart();
+                    logout();
+                  }}
+                >
                   Logout
                 </Button>
               </div>

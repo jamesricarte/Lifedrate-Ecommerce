@@ -3,12 +3,14 @@ import Button from "../../../components/Button";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../../../context/AuthContext";
+import { useCart } from "../../../context/CartContext";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 const Body = () => {
   const { id } = useParams();
   const { user } = useAuth();
+  const { addToCart } = useCart();
   const [product, setProduct] = useState({
     name: "",
     price: "",
@@ -19,6 +21,8 @@ const Body = () => {
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
+
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const [message, setMessage] = useState(null);
   const [isMessageVisible, setIsMessageVisible] = useState(false);
@@ -42,13 +46,29 @@ const Body = () => {
     fetchProduct();
   }, [id]);
 
-  const addToCart = async () => {
+  const handleAddToCart = async () => {
+    if (isDisabled) return;
+
+    setIsDisabled(true);
     try {
       const response = await axios.post(`${API_URL}/cart`, {
         userId: user.id,
         productId: id,
         quantity,
       });
+
+      addToCart({
+        productId: {
+          description: product.description,
+          _id: id,
+          name: product.name,
+          price: product.price,
+          image: product.image,
+        },
+        quantity: quantity,
+        id: null,
+      });
+
       setMessage({ text: response.data.message, type: "success" });
       setIsMessageVisible(true);
 
@@ -60,6 +80,8 @@ const Body = () => {
       setIsMessageVisible(true);
 
       setTimeout(() => setIsMessageVisible(false), 3000);
+    } finally {
+      setTimeout(() => setIsDisabled(false), 5000);
     }
   };
 
@@ -109,7 +131,7 @@ const Body = () => {
               <Button
                 className="mt-12 w-28"
                 variant="primary"
-                onClick={addToCart}
+                onClick={handleAddToCart}
               >
                 Add to Cart
               </Button>
